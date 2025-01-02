@@ -13,7 +13,7 @@ def process_chat_data(train_split=0.9):
     
     # Convert dataset to formatted text
     def format_conversation(example):
-        return f"Description: {example['description']}\nPatient: {example['patient']}\nDoctor: {example['doctor']}\n---\n"
+        return f"Description: {example['Description']}\nPatient: {example['Patient']}\nDoctor: {example['Doctor']}\n---\n"
     
     # Create the full text corpus
     # Assuming the main split we want to use is 'train'
