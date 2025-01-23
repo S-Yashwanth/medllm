@@ -1,22 +1,32 @@
 """
-Prepare the Shakespeare dataset for character-level language modeling.
+Prepare the AI Medical Chatbot dataset for character-level language modeling.
 So instead of encoding with GPT-2 BPE tokens, we just map characters to ints.
 Will save train.bin, val.bin containing the ids, and meta.pkl containing the
 encoder and decoder and some other related info.
 """
 import os
 import pickle
-import requests
 import numpy as np
+import pandas as pd
 
-# download the tiny shakespeare dataset
-input_file_path = os.path.join(os.path.dirname(__file__), 'input.txt')
-if not os.path.exists(input_file_path):
-    data_url = 'https://github.com/S-Yashwanth/datamed/blob/main/input.txt'
-    with open(input_file_path, 'w') as f:
-        f.write(requests.get(data_url).text)
+# download the AI Medical Chatbot dataset
+df = pd.read_parquet("hf://datasets/ruslanmv/ai-medical-chatbot/dialogues.parquet")
 
-with open(input_file_path, 'r') as f:
+# File to save the output
+output_file = os.path.join(os.path.dirname(__file__), 'output1.txt')
+
+# Writing to the file
+with open(output_file, "w", encoding="utf-8") as file:
+    for i in range(len(df)):
+        file.write("Patient: \n")
+        file.write(df["Patient"][i] + "\n")
+        file.write("Doctor: \n")
+        file.write(df["Doctor"][i] + "\n")
+        file.write("\n")  # Add a blank line between entries for readability
+
+print(f"Data has been written to {output_file}")
+
+with open(output_file, 'r', encoding="utf-8") as f:
     data = f.read()
 print(f"length of dataset in characters: {len(data):,}")
 
@@ -59,10 +69,3 @@ meta = {
 }
 with open(os.path.join(os.path.dirname(__file__), 'meta.pkl'), 'wb') as f:
     pickle.dump(meta, f)
-
-# length of dataset in characters:  1115394
-# all the unique characters:
-#  !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-# vocab size: 65
-# train has 1003854 tokens
-# val has 111540 tokens
