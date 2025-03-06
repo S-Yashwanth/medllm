@@ -18,9 +18,6 @@ output_file = os.path.join(os.path.dirname(__file__), 'output1.txt')
 # Writing to the file
 with open(output_file, "w", encoding="utf-8") as file:
     for i in range(len(df)):
-        file.write("Patient: \n")
-        file.write(df["Patient"][i] + "\n")
-        file.write("Doctor: \n")
         file.write(df["Doctor"][i] + "\n")
         file.write("\n")  # Add a blank line between entries for readability
 
