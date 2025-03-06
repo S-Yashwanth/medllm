@@ -11,7 +11,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16'
 
 # Load checkpoint
-ckpt_path = os.path.join(out_dir, 'ckpt.pt')
+ckpt_path = os.path.join(out_dir, '/kaggle/working/medllm/out-shakespeare-char/ckpt.pt')
 checkpoint = torch.load(ckpt_path, map_location=device)
 
 # Load model configuration
